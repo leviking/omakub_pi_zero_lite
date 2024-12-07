@@ -12,8 +12,10 @@ echo -e "$ascii_art"
 echo "=> Omakub zero lite is for fresh pi OS for armv6 installations only!"
 echo -e "\nBegin installation (or abort with ctrl+c)..."
 
-sudo apt-get update >/dev/null
-sudo apt-get install -y git >/dev/null
+# sudo apt-get update >/dev/null
+sudo apt-get update # let's not pipe to dev null
+# sudo apt-get install -y git >/dev/null
+sudo apt-get install -y git # also not piping to dev null
 
 echo "Cloning Omakub..."
 rm -rf ~/.local/share/omakub
