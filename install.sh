@@ -19,7 +19,9 @@ else
 fi
 
 echo "Get ready to make a few choices..."
-source ~/.local/share/omakub/install/terminal/required/app-gum.sh >/dev/null
+#source ~/.local/share/omakub/install/terminal/required/app-gum.sh >/dev/null
+#no dev null... for now
+source ~/.local/share/omakub/install/terminal/required/app-gum.sh
 source ~/.local/share/omakub/install/first-run-choices.sh
 
 # Install terminal tools
