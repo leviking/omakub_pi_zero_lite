@@ -18,6 +18,10 @@ else
   exit 1
 fi
 
+echo "Get ready to make a few choices..."
+source ~/.local/share/omakub/install/terminal/required/app-gum.sh >/dev/null
+source ~/.local/share/omakub/install/first-run-choices.sh
+
 # Install terminal tools
 source ~/.local/share/omakub/install/terminal.sh
 
