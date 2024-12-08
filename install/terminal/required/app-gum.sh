@@ -16,6 +16,6 @@ fi
 cd /tmp
 GUM_VERSION="0.14.3" # Use known good version
 wget -qO gum.deb "https://github.com/charmbracelet/gum/releases/download/v${GUM_VERSION}/gum_${GUM_VERSION}_${ARCH_SUFFIX}.deb"
-sudo apt-get install -y ./gum.deb
+sudo apt-get install -y ./gum
 rm gum.deb
 cd -
