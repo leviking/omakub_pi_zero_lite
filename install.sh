@@ -8,7 +8,7 @@ IS_RASPBIAN_LITE=$([[ -f /etc/os-release && $(grep -q "ID=raspbian" /etc/os-rele
 # Check the distribution name and version and abort if incompatible
 # source ~/.local/share/omakub/install/check-version.sh
 
-$IS_RASPBIAN_LITE; then
+if $IS_RASPBIAN_LITE; then
   echo "Detected Raspbian Lite. Only installing terminal tools..."
 else
   echo "This script is designed to run on Raspbian Lite only. Exiting..."
