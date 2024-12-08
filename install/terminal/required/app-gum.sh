@@ -6,6 +6,8 @@ if [[ "$ARCH" == "armv6l" ]]; then
   ARCH_SUFFIX="armhf6"
 elif [[ "$ARCH" == "armv7l" ]]; then
   echo "Running on ARMv7 architecture"
+  echo "you need to make sure this works"
+  exit 1
 else
   echo "Architecture not recognized as ARMv6 or ARMv7"
   exit 1
