@@ -3,7 +3,10 @@ set -e
 
 # Desktop software and tweaks will only be installed if we're running Gnome
 # RUNNING_GNOME=$([[ "$XDG_CURRENT_DESKTOP" == *"GNOME"* ]] && echo true || echo false)
-IS_RASPBIAN_LITE=$([[ -f /etc/os-release && $(grep -q "ID=raspbian" /etc/os-release) && -z "$XDG_CURRENT_DESKTOP" ]] && echo true || echo false)
+IS_RASPBIAN_LITE=$(
+  [[ -f /etc/os-release && -z "$XDG_CURRENT_DESKTOP" ]] && \
+  grep -q "ID=raspbian" /etc/os-release && echo true || echo false
+)
 
 # Check the distribution name and version and abort if incompatible
 # source ~/.local/share/omakub/install/check-version.sh
