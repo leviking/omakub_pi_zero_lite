@@ -1,3 +1,5 @@
+echo "installing neovim"
+echo "exiting because this wont work"
 exit 1
 cd /tmp
 wget -O nvim.tar.gz "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
