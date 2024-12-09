@@ -2,32 +2,14 @@
 echo "Installing Neovim system-wide..."
 
 # Define the tarball location
-TARBALL="$HOME/.local/share/omakub/tars/nvim.tar.gz"
+TARBALL="$HOME/.local/share/omakub/tars/neovim-pi-zero.tar.gz"
 
 if [[ -f "$TARBALL" ]]; then
     echo "Extracting Neovim..."
     # Extract to a temporary directory
-    TEMP_DIR=$(mktemp -d)
-    tar -xzf "$TARBALL" -C "$TEMP_DIR"
-
-    # Check extracted structure
-    if [[ ! -f "$TEMP_DIR/neovim/bin/nvim" ]]; then
-        echo "Error: Neovim binary not found in extracted tarball."
-        echo "Check the structure of the tarball."
-        exit 1
-    fi
-
-    # Move the binary to /usr/local/bin
-    echo "Moving Neovim binary to /usr/local/bin..."
-    sudo mv "$TEMP_DIR/neovim/bin/nvim" /usr/local/bin/
-
-    # Move the runtime files to /usr/local/share
-    echo "Moving Neovim runtime files to /usr/local/share..."
-    sudo mkdir -p /usr/local/share/nvim
-    sudo mv "$TEMP_DIR/neovim/share/nvim/runtime" /usr/local/share/nvim/
+    sudo tar -xzf neovim-pi-zero.tar.gz -C /usr/local
 
     # Clean up the temporary directory
-    rm -rf "$TEMP_DIR"
 
     # Verify installation
     if command -v nvim &>/dev/null; then
