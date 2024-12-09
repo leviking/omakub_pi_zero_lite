@@ -5,7 +5,7 @@ echo "Installing Neovim..."
 if [[ -f ~/.local/share/omakub/tars/nvim.tar.gz ]]; then
     echo "Extracting Neovim..."
     # Extract the tarball
-    if tar -xzf ~/.local/share/omakub/tars/nvim.tar.gz -C ~/.local/share/omakub/; then
+    if tar -xzf ~/.local/share/omakub/tars/nvim.tar.gz -C ~/.local/share/omakub/bin; then
         echo "Adding Neovim binary to PATH..."
         chmod +x ~/.local/share/omakub/bin/neovim/bin/nvim
 
@@ -14,7 +14,7 @@ if [[ -f ~/.local/share/omakub/tars/nvim.tar.gz ]]; then
         if [ ! -d "$HOME/.local/share/nvim" ]; then
             mkdir -p ~/.local/share/nvim
         fi
-        cp -r ~/.local/share/omakub/share/nvim/* ~/.local/share/nvim/
+        cp -r ~/.local/share/omakub/bin/neovim/share/nvim/* ~/.local/share/nvim/
         echo "Neovim runtime configured successfully."
 
         echo "Neovim installed successfully."
