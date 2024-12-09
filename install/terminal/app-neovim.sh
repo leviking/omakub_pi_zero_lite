@@ -1,31 +1,39 @@
-
-echo "Installing Neovim..."
-
 # Takes forever to build, so we included a binary
-if [[ -f ~/.local/share/omakub/tars/nvim.tar.gz ]]; then
+echo "Installing Neovim system-wide..."
+
+# Define the tarball location
+TARBALL="$HOME/.local/share/omakub/tars/nvim.tar.gz"
+
+if [[ -f "$TARBALL" ]]; then
     echo "Extracting Neovim..."
-    # Extract the tarball
-    if tar -xzf ~/.local/share/omakub/tars/nvim.tar.gz -C ~/.local/share/omakub/bin; then
-        echo "Adding Neovim binary to PATH..."
-        chmod +x ~/.local/share/omakub/bin/neovim/bin/nvim
+    # Extract to a temporary directory
+    TEMP_DIR=$(mktemp -d)
+    tar -xzf "$TARBALL" -C "$TEMP_DIR"
 
-        echo "Configuring Neovim runtime..."
-        # Ensure runtimepath is correctly set
-        if [ ! -d "$HOME/.local/share/nvim" ]; then
-            mkdir -p ~/.local/share/nvim
-        fi
-        cp -r ~/.local/share/omakub/bin/neovim/share/nvim/* ~/.local/share/nvim/
-        echo "Neovim runtime configured successfully."
+    # Move the binary and runtime files to the appropriate system-wide locations
+    echo "Moving Neovim binary to /usr/local/bin..."
+    sudo mv "$TEMP_DIR/bin/nvim" /usr/local/bin/
 
-        echo "Neovim installed successfully."
+    echo "Moving Neovim runtime files to /usr/local/share..."
+    sudo mkdir -p /usr/local/share/nvim
+    sudo mv "$TEMP_DIR/share/nvim/"* /usr/local/share/nvim/
+
+    # Clean up the temporary directory
+    rm -rf "$TEMP_DIR"
+
+    # Verify installation
+    if command -v nvim &>/dev/null; then
+        echo "Neovim installed successfully!"
+        nvim --version
     else
-        echo "Error: Failed to extract Neovim. Please check the archive."
+        echo "Error: Neovim installation failed."
         exit 1
     fi
 else
-    echo "Error: nvim.tar.gz not found in ~/.local/share/omakub/tars/"
+    echo "Error: Neovim tarball not found at $TARBALL."
     exit 1
 fi
+
 
 # Only attempt to set configuration if Neovim has never been run
 if [ ! -d "$HOME/.config/nvim" ]; then
