@@ -10,13 +10,21 @@ if [[ -f "$TARBALL" ]]; then
     TEMP_DIR=$(mktemp -d)
     tar -xzf "$TARBALL" -C "$TEMP_DIR"
 
-    # Move the binary and runtime files to the appropriate system-wide locations
-    echo "Moving Neovim binary to /usr/local/bin..."
-    sudo mv "$TEMP_DIR/bin/nvim" /usr/local/bin/
+    # Check extracted structure
+    if [[ ! -f "$TEMP_DIR/neovim/bin/nvim" ]]; then
+        echo "Error: Neovim binary not found in extracted tarball."
+        echo "Check the structure of the tarball."
+        exit 1
+    fi
 
+    # Move the binary to /usr/local/bin
+    echo "Moving Neovim binary to /usr/local/bin..."
+    sudo mv "$TEMP_DIR/neovim/bin/nvim" /usr/local/bin/
+
+    # Move the runtime files to /usr/local/share
     echo "Moving Neovim runtime files to /usr/local/share..."
     sudo mkdir -p /usr/local/share/nvim
-    sudo mv "$TEMP_DIR/share/nvim/"* /usr/local/share/nvim/
+    sudo mv "$TEMP_DIR/neovim/share/nvim/runtime" /usr/local/share/nvim/
 
     # Clean up the temporary directory
     rm -rf "$TEMP_DIR"
@@ -33,7 +41,6 @@ else
     echo "Error: Neovim tarball not found at $TARBALL."
     exit 1
 fi
-
 
 # Only attempt to set configuration if Neovim has never been run
 if [ ! -d "$HOME/.config/nvim" ]; then
