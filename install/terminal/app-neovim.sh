@@ -8,6 +8,7 @@ if [[ -f "$TARBALL" ]]; then
     echo "Extracting Neovim..."
     # Extract to a temporary directory
     sudo tar -xzf "$HOME/.local/share/omakub/tars/neovim-pi-zero.tar.gz" -C /
+    sudo chmod +x /usr/share/bin/nvim
 
     # Clean up the temporary directory
 
@@ -42,6 +43,31 @@ if [ ! -d "$HOME/.config/nvim" ]; then
     # Enable default extras
     cp ~/.local/share/omakub/configs/neovim/lazyvim.json ~/.config/nvim/lazyvim.json
     echo "Neovim configuration set up successfully."
+
+    echo "Lazy will probably die on an older pi if you don't set concurrency to a real low number and throttle git"
+    echo "edit ./config/nvim/lua/config/lazy.lua"
+    LAZY_FILE=~/.config/nvim/lua/config/lazy.lua
+
+    # Add the checker and git configurations
+    awk '
+    /^return {/ {
+        print $0
+        print "  checker = {"
+        print "    concurrency = 1,"
+        print "  },"
+        print "  git = {"
+        print "    throttle = {"
+        print "      enabled = true,"
+        print "      rate = 2,"
+        print "      duration = 5 * 1000,"
+        print "    },"
+        print "  },"
+        next
+    }
+    { print }
+    ' "$LAZY_FILE" > "$LAZY_FILE.tmp" && mv "$LAZY_FILE.tmp" "$LAZY_FILE"
+    
+    echo "Configuration updated successfully!"
 fi
 
 # Replace desktop launcher with one running inside Alacritty
