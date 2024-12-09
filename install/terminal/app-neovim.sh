@@ -1,14 +1,22 @@
 echo "installing neovim"
-echo "exiting because this wont work"
-exit 1
-cd /tmp
-wget -O nvim.tar.gz "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
-tar -xf nvim.tar.gz
-sudo install nvim-linux64/bin/nvim /usr/local/bin/nvim
-sudo cp -R nvim-linux64/lib /usr/local/
-sudo cp -R nvim-linux64/share /usr/local/
-rm -rf nvim-linux64 nvim.tar.gz
-cd -
+
+# Takes forever to build so we included a binary
+if [[ -f ~/.local/share/omakub/tars/nvim.tar.gz ]]; then
+    echo "Extracting Neovim..."
+    if tar -xzf ~/.local/share/omakub/tars/nvim.tar.gz -C ~/.local/share/omakub/bin/; then
+        echo "Adding Neovim to PATH..."
+        chmod +x ~/.local/share/omakub/bin/nvim/bin/nvim
+        export PATH="$HOME/.local/share/omakub/bin/nvim/bin:$PATH"
+        echo 'export PATH="$HOME/.local/share/omakub/bin/nvim/bin:$PATH"' >> ~/.bashrc
+        echo "Neovim extracted and configured successfully."
+    else
+        echo "Error: Failed to extract Neovim. Please check the archive."
+        exit 1
+    fi
+else
+    echo "Error: nvim.tar.gz not found in ~/.local/share/omakub/tars/"
+    exit 1
+fi
 
 # Only attempt to set configuration if Neovim has never been run
 if [ ! -d "$HOME/.config/nvim" ]; then
