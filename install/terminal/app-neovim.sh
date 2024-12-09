@@ -5,9 +5,7 @@ if [[ -f ~/.local/share/omakub/tars/nvim.tar.gz ]]; then
     echo "Extracting Neovim..."
     if tar -xzf ~/.local/share/omakub/tars/nvim.tar.gz -C ~/.local/share/omakub/bin/; then
         echo "Adding Neovim to PATH..."
-        chmod +x ~/.local/share/omakub/bin/nvim/bin/nvim
-        export PATH="$HOME/.local/share/omakub/bin/nvim/bin:$PATH"
-        echo 'export PATH="$HOME/.local/share/omakub/bin/nvim/bin:$PATH"' >> ~/.bashrc
+        chmod +x ~/.local/share/omakub/bin/nvim
         echo "Neovim extracted and configured successfully."
     else
         echo "Error: Failed to extract Neovim. Please check the archive."
