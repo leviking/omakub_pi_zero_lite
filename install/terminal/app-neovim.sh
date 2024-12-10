@@ -8,7 +8,7 @@ if [[ -f "$TARBALL" ]]; then
     echo "Extracting Neovim..."
     # Extract to a temporary directory
     sudo tar -xzf "$HOME/.local/share/omakub/tars/neovim-pi-zero.tar.gz" -C /
-    sudo chmod +x /usr/share/bin/nvim
+    sudo chmod +x /usr/local/bin/nvim
 
     # Clean up the temporary directory
 
